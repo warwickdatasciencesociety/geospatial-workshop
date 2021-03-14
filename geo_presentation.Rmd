@@ -1,6 +1,6 @@
 ---
-title: "Geospatial Analysis with R"
-author: "Janique Krasnowska"
+title: "Geospatial Data Science with R"
+author: "Warwick Data Science Society"
 date: "13/03/2021"
 output: ioslides_presentation
 widescreen: true
@@ -119,9 +119,10 @@ ggplot() +
           axis.title.x = element_blank())
 ```
 
+
 ## ggplot for visualisations
 ```{r echo = TRUE, eval = FALSE}
-ggplot()  +
+ggplot() +
     # Adding layer of roads
     geom_segment(data = roads_plt, 
                aes(x = long1, y = lat1, xend = long2, yend = lat2)) + 
@@ -133,6 +134,25 @@ ggplot()  +
     # Adding labels for pumps
     geom_label(data = pumps_plt, aes(x = long, y = lat, label = lbl), 
                nudge_y = 0.0007) 
+```
+
+## Density 
+
+`geom_hex(data = fatal_plt, aes(x = long, y = lat), bins = 13)` 
+
+```{r}
+ggplot() +
+    geom_hex(data = fatal_plt, aes(x = long, y = lat), bins = 13) + 
+    geom_segment(data = roads_plt, 
+                 aes(x = long1, y = lat1, xend = long2, yend = lat2)) +
+    geom_point(data = pumps_plt, aes(x = long, y = lat), 
+               col = "red4", fill = "red1", pch = 25, size = 3) +
+    geom_label(data = pumps_plt, aes(x = long, y = lat, label = lbl), 
+               nudge_y = 0.0007) +
+    labs(title = "The density of fatalities is highest on Broad Street") +
+  theme_minimal()  +
+    theme(axis.title.y = element_blank(),
+          axis.title.x = element_blank())
 ```
 
 ## Distances
@@ -259,9 +279,14 @@ Requires further analysis.
 <div class="columns-2">
 - the `OpenStreetMap` library
 - the Mercator projection
+- could include cycle routes, public transport, land relief
 
 ![](osm.png){width=100%}
 </div>
+
+## Smooth density 
+
+![](density.png)
 
 ## Further Resources
 
@@ -270,6 +295,9 @@ https://github.com/lindbrook/cholera
 
 - Example of using tif and shp files:
 http://rstudio-pubs-static.s3.amazonaws.com/4978_ae448a4622ed437f8619c29a16acf2a9.html
+
+- Correspondance of meters to degrees in latitude and longitude
+http://www.csgnetwork.com/degreelenllavcalc.html
 
 - Github and R Studio Cloud for this workshop:
 https://rstudio.cloud/spaces/128705/join?access_code=zYU0kUP39y3F2ioQg8%2FfERydxg82JIH3YsuhCWhn

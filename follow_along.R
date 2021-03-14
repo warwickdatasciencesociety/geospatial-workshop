@@ -50,6 +50,19 @@ ggplot() + geom_point(data = fatal_plt, aes(x = long, y = lat), size = 1.2) +
 # To explore:
 # ggplot themes to make the map the most appealing
 # ggrepel for automatic label separation
+
+# Simple density plot with geom_hex
+ggplot() +
+  geom_hex(data = fatal_plt, aes(x = long, y = lat), bins = 13) + 
+  geom_segment(data = roads_plt, 
+               aes(x = long1, y = lat1, xend = long2, yend = lat2)) +
+  geom_point(data = pumps_plt, aes(x = long, y = lat), 
+             col = "red4", fill = "red1", pch = 25, size = 3) +
+  geom_label(data = pumps_plt, aes(x = long, y = lat, label = lbl), 
+             nudge_y = 0.0007)
+
+# To explore:
+# geom_bin2d creates rectangles instead of hexagonsS
   
 #### Loops for closest pump ####
 # Setting empty vectors for the closest pump to each case
@@ -154,9 +167,20 @@ fatal_merc <- projectMercator(fatal_plt$lat, fatal_plt$long, drop = TRUE) %>%
 
 # Adding the fatalities onto a modern map
 autoplot.OpenStreetMap(london) + 
-  geom_point(data = fatal_merc, aes(x = x, y = y), size = 1.5) +
-  labs(title = "Cholera cases from 1854 on the map of modern London")
-
+  geom_point(data = fatal_merc, aes(x = x, y = y)) +
+  labs(title = "1854 cholera fatalities on a map of modern London")
+  
 # To explore:
 # How can the precision of the conversion be improved?
 # Different types of maps, other than "osm"
+
+# Smooth density on a modern map
+autoplot.OpenStreetMap(london) + 
+  stat_density2d(data = fatal_merc, 
+                 aes(x = x, y = y, fill = ..density..), 
+                 geom = "raster", contour = FALSE, alpha = 0.4) +
+  scale_fill_gradient(low = "white", high = "red", na.value = NA) +
+  labs(title = "The density of cholera fatalities", fill = "Density")
+
+# To explore:
+# What colours would work the best with the gradient?
