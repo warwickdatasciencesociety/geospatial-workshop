@@ -39,7 +39,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 ## Data Format
 
-- `library(cholera)`
+- `library(cholera)` $\rightarrow$ R Studio Cloud
 - Location of pumps, roads and fatalities
 
 **Fatalities**
@@ -48,6 +48,7 @@ library(cholera)
 library(tidyverse)
 fatalities[1:10,] 
 ```
+
 
 ## Pumps
 ```{r}
@@ -269,4 +270,8 @@ https://github.com/lindbrook/cholera
 
 - Example of using tif and shp files:
 http://rstudio-pubs-static.s3.amazonaws.com/4978_ae448a4622ed437f8619c29a16acf2a9.html
+
+- Github and R Studio Cloud for this workshop:
+https://rstudio.cloud/spaces/128705/join?access_code=zYU0kUP39y3F2ioQg8%2FfERydxg82JIH3YsuhCWhn
+https://github.com/warwickdatasciencesociety/geospatial-workshop
 
